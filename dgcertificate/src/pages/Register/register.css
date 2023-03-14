@@ -52,6 +52,12 @@ p.policy{
 p.already{
     margin-top: 1rem;
 }
+.MuiFormHelperText-root{
+    font-size: 12.7px !important;
+    position: absolute;
+    bottom: -1.1rem;
+    right: -10px;
+}
 @media screen and (max-width: 780px) {
     .register__container .logo{
         margin-left: 1rem;
