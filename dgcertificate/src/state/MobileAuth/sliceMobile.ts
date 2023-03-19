@@ -35,7 +35,7 @@ const mobileSlice=createSlice({
             state.phoneNumber=phoneNumber;
             state.uid=uid;
         },
-        resetAtLogout:(state)=>{
+        resetAtLogoutMobile:(state)=>{
             state=initialState;
             localStorage.removeItem('mobileAuth');
         }
@@ -43,4 +43,4 @@ const mobileSlice=createSlice({
 });
 
 export const mobileReducer=mobileSlice.reducer;
-export const {setAtLogin,resetAtLogout}=mobileSlice.actions
+export const {setAtLogin,resetAtLogoutMobile}=mobileSlice.actions

@@ -36,7 +36,7 @@ const CertificateCarousel = () => {
         rewind: true,
         interval: 2000,
         drag: "free",
-        height: '15rem',
+        height: '12.5rem',
         width: '100%'
 
     };

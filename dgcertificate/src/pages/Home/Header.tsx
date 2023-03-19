@@ -2,21 +2,24 @@ import { Button, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   return (
-    <Paper elevation={3} style={{position:'fixed',width:'100%',top:'0',zIndex:'100'}} square>
+    <Paper elevation={3} style={{ position: 'fixed', width: '100%', top: '0', zIndex: '100' }} square>
       <HeaderContainer >
-        <Logo>
-          <img src="https://igitsarang.ac.in/assets/frontend//images/logo.png" alt="" />
-          <Typography >Digital Certificate</Typography>
-        </Logo>
+        <Link to='/'>
+          <Logo>
+            <img src="https://igitsarang.ac.in/assets/frontend//images/logo.png" alt="" />
+            <Typography >Digital Certificate</Typography>
+          </Logo>
+        </Link>
 
         <LoginSign>
-          <Button variant='text' onClick={()=>navigate('/login')} >SIGN IN</Button>
+          <Button variant='text' onClick={() => navigate('/login')} >SIGN IN</Button>
           <hr style={{ border: '1.3px solid rgb(98, 97, 97)' }} />
-          <Button variant='contained' style={{ borderRadius: '1.5rem' }} onClick={()=>navigate('/register')} >SIGN UP</Button>
+          <Button variant='contained' style={{ borderRadius: '1.5rem' }} onClick={() => navigate('/register')} >SIGN UP</Button>
         </LoginSign>
       </HeaderContainer>
     </Paper>
@@ -31,6 +34,9 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: .5rem 1rem;
+  p{
+    color: black;
+  }
 
   @media screen and (max-width: 780px)  {
       justify-content: space-evenly;

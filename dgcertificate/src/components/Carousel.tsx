@@ -4,7 +4,7 @@ import '@splidejs/splide/css';
 import { HomeImage } from './HomeImage';
 
 
-const carousel = () => {
+const carousel:React.FC = () => {
   const options: Options = {
     type: 'loop',
     gap: '1rem',

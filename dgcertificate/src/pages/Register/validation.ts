@@ -1,4 +1,5 @@
-import {FormikErrors} from 'formik'
+import {FormikErrors, FormikValues} from 'formik';
+
 export interface formType {
     name: string,
     gender: string,
@@ -8,18 +9,10 @@ export interface formType {
     rollNumber: number,
     passingYear: number
 }
-export const initialValues: formType = {
-    name: '',
-    gender: '',
-    mobileNumber: 0,
-    emailId: '',
-    registrationNumber: 0,
-    rollNumber: 0,
-    passingYear: 0
-}
-export const validateForm = (values: formType) => {
-    let errors: FormikErrors<formType> ={};
 
+
+export const validateForm = (values: FormikValues) => {
+    let errors: FormikErrors<formType> ={};
     if (values.name.trim() === "") {
         errors.name = 'Name is required';
     } else if (values.name === 'undefined' || values.name === null) {
@@ -50,4 +43,21 @@ export const validateForm = (values: formType) => {
         errors.passingYear = "Year must be 4 digit";
     }   
     return errors;
+}
+
+export interface placeHolder {
+    displayName: string,
+    email: string,
+    phoneNumber: string
+}
+
+export interface SubmittedFormType{
+    name:string,
+    mobileNumber:string,
+    emailId:string,
+    regdNo:string,
+    rollNo:string,
+    passYear:string,
+    gender:string
+    verifyed:boolean
 }
