@@ -1,7 +1,7 @@
 import './register.css';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
-import { FormControl, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
+import { FormControl, FormControlLabel, FormHelperText, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { validateForm, formType, placeHolder, SubmittedFormType } from './validation'
 import { useEffect, useState } from 'react';
@@ -15,18 +15,20 @@ import { setUserDetails } from '../../state/User/user-slice';
 const Register = () => {
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState<ReceivedDocuments[]>([]);
-    const loginEmail=useAppSelector(state=>state.google.email);
+    const loginEmail = useAppSelector(state => state.google.email);
+    const loginMobile = useAppSelector(state => state.mobile.phoneNumber);
     const navigate = useNavigate();
     const typeLogin = useAppSelector(state => state.auth.mobileLogin);
     const googleLoginState = useAppSelector(state => state.google);
     const mobileLoginState = useAppSelector(state => state.mobile);
     const dispatch = useAppDispatch();
-    
+
     const initialValues: formType = {
         name: '',
         gender: 'male',
         mobileNumber: 0,
         emailId: googleLoginState?.email,
+        branch: '',
         registrationNumber: 0,
         rollNumber: 0,
         passingYear: 0
@@ -50,11 +52,17 @@ const Register = () => {
         setUsers(documentFields);
         checkUser(documentFields);
     }
-    const checkUser=(documentFields: ReceivedDocuments[])=>{
-        const findEmail=documentFields.find(user=>{
-            return user.fields.emailId===loginEmail;
+    const checkUser = (documentFields: ReceivedDocuments[]) => {
+
+        const findEmail = documentFields.find(user => {
+            return user.fields.emailId === loginEmail;
         })
-        if (findEmail!==undefined) {
+        const findMobile = documentFields.find(user => user.fields.mobileNumber === loginMobile);
+        if (findEmail !== undefined || findMobile !== undefined) {
+
+            if (findEmail?.fields !== undefined) {
+                storeDetailsInState(findEmail.fields as SubmittedFormType);
+            }
             navigate('/home');
         }
     }
@@ -75,11 +83,12 @@ const Register = () => {
 
     // console.log(formik.errors)
     const getStructureFormDetails = (values: formType) => {
-        const { name, mobileNumber, emailId, registrationNumber, rollNumber, passingYear, gender } = values;
+        const { name, mobileNumber, emailId, branch, registrationNumber, rollNumber, passingYear, gender } = values;
         const userRegister: SubmittedFormType = {
             name,
             mobileNumber: String(mobileNumber),
             emailId,
+            branch,
             regdNo: String(registrationNumber),
             rollNo: String(rollNumber),
             passYear: String(passingYear),
@@ -109,6 +118,7 @@ const Register = () => {
         }
 
     }
+
     return (
         <div className='register__container' >
             <div className='logo'>
@@ -141,6 +151,24 @@ const Register = () => {
                                 onChange={formik.handleChange}
                                 error={!(formik.errors.emailId === undefined)}
                             />
+                        </dd>
+                        <dd className='input__field'>
+                            <FormControl required sx={{ minWidth: 120 }}>
+                                <InputLabel id="demo-simple-select-required-label">Branch</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-required-label"
+                                    id="demo-simple-select-required"
+                                    value={formik.values.branch}
+                                    label="Age *"
+                                    name='branch'
+                                    onChange={formik.handleChange}
+                                    fullWidth
+                                >
+                                    <MenuItem value={"btech"}>B.Tech</MenuItem>
+                                    <MenuItem value={"mca"}>MCA</MenuItem>
+                                    <MenuItem value={"diploma"}>Diploma</MenuItem>
+                                </Select>
+                            </FormControl>
                         </dd>
                         <dd className='input__field'><TextField required id="outlined-basic" size='small' fullWidth label="Registration Number" variant="outlined" type='number' name='registrationNumber' value={formik.values.registrationNumber} onChange={formik.handleChange} helperText={(formik.errors.registrationNumber === undefined || formik.errors.registrationNumber === '') ? '' : formik.errors.registrationNumber} error={!(formik.errors.registrationNumber === undefined)} />
                         </dd>

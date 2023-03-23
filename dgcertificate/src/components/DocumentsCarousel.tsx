@@ -4,10 +4,14 @@ import '@splidejs/splide/css';
 import styled from "styled-components";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { useEffect, useState } from "react";
-import { FireStoreCollection, providedDocumentsType } from "../firebase/firestore-collection";
+import { FireStoreCollection } from "../firebase/firestore-collection";
+import { providedDocumentsList } from "../pages/Home/CertificateCarousel";
+import { useNavigate } from "react-router-dom";
+
 
 const DocumentsCarousel = () => {
-    const [providedDocument, setProvidedDocument] = useState<providedDocumentsType>([]);
+    const [providedDocument, setProvidedDocument] = useState<providedDocumentsList[]>([]);
+    const navigate = useNavigate();
     const options: Options = {
         breakpoints: {
             640: {
@@ -30,36 +34,41 @@ const DocumentsCarousel = () => {
         perMove: 1,
         height: '12rem',
         width: '100%',
-        autoplay: true,
+        // autoplay: true,
         interval: 1000,
         rewind: true,
         gap: '2rem',
         padding: { left: '1rem', right: '1rem' },
     };
     const fetchProvidedDocuments = async () => {
-        const providedDocuments = new FireStoreCollection('providedCertificates');
-        try {
-            const documents: providedDocumentsType = await providedDocuments.readProvidedDocuments();
-            setProvidedDocument(documents);
-        } catch (error) {
-            console.error(error);
-        }
+        const providedCertificate = new FireStoreCollection('providedCertificates');
+        const list = await providedCertificate.readProvidedDocuments();
+        setProvidedDocument(list);
+    }
+
+    const handleCardClick = (document: providedDocumentsList) => {
+        const documentType = document.fields.type.toLowerCase();
+        navigate(`/home/${documentType}`);
     }
     useEffect(() => {
         fetchProvidedDocuments();
     }, []);
-    
+
     return (
         <DocumentCarousel>
             <Typography marginBottom='2rem' color='primary' variant="h5">Your Issued Documents</Typography>
             <Splide options={options} >
                 {
                     providedDocument.map(document => {
+                        const st = document.fields.branch.toUpperCase();
                         return (
                             <SplideSlide key={document.id}>
-                                <Card>
-                                    <img src={document.image} alt={document.title + "img"} />
-                                    <h4>{document.title}</h4>
+                                <Card onClick={() => handleCardClick(document)}>
+                                    <img src={document.fields.imageUrl} alt={document.fields.title + "img"} />
+                                    <CardTitle>
+                                        <h4>{st}</h4>
+                                        <h4>{document.fields.title}</h4>
+                                    </CardTitle>
                                 </Card>
                             </SplideSlide>
                         )
@@ -103,3 +112,10 @@ const Card = styled.div`
         
     }
 `;
+const CardTitle = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.4rem;
+`

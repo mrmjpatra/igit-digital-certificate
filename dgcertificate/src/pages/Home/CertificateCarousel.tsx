@@ -5,9 +5,32 @@ import { certificate } from './certificate'
 import Chip from '@mui/material/Chip';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import "@splidejs/splide/dist/css/splide.min.css"
+import { useEffect, useState } from 'react';
+import { FireStoreCollection } from '../../firebase/firestore-collection';
 
+export type thumbnailType = {
+    title: string,
+    type:string,
+    branch: string,
+    imageUrl: string
+}
+export interface providedDocumentsList {
+    fields: thumbnailType,
+    id: string
+}
 
 const CertificateCarousel = () => {
+    const [certificateList, setCertificateList] = useState<providedDocumentsList[]>([]);
+
+    useEffect(() => {
+        const fetchProvidedCertificates = async () => {
+            const providedCertificate = new FireStoreCollection('providedCertificates');
+            const list = await providedCertificate.readProvidedDocuments();
+            setCertificateList(list);
+        }
+        fetchProvidedCertificates();
+    }, []);
+
     const options: Options = {
         perPage: 3,
         breakpoints: {
@@ -49,12 +72,12 @@ const CertificateCarousel = () => {
                     aria-label="My Favorite Images"
                 >
                     {
-                        certificate.map(item => {
+                        certificateList.map(item => {
                             return (
                                 <SplideSlide key={item.id}>
                                     <Card>
-                                        <p>{item.title}</p>
-                                        <img src={item.image} alt="" />
+                                        <p>{item.fields.title}</p>
+                                        <img src={item.fields.imageUrl} alt={item.fields.title} />
                                     </Card>
                                 </SplideSlide>
                             )
@@ -114,21 +137,23 @@ const Card = styled.div`
     overflow: hidden;
     img{
         border-radius: 1rem;
-        position: absolute;
-        left: 0;
-        width: 100%;
-        height: 85%;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 60%;
+    transform: translate(14px, 36px);
     }
     p{
         position: absolute;
         z-index: 10;
         left: 50%;
         bottom: 0%;
-        color: white;
+        color: #ffffff;
         width: 100%;
-        transform: translate(-50%,0%);
+        transform: translate(-45%, -20%);
         text-align: center;
-        font-weight: 600;
+        font-size: 1rem;
+        font-weight: 400;
         height: 40%;
         display: flex;
         justify-content: center;

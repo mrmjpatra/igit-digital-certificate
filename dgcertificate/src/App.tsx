@@ -8,6 +8,8 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import ProtectedHome  from './pages/AuthenticatedPages/Home/Home';
 import MainContent from './pages/AuthenticatedPages/Home/MainContent';
 import IssuedDocument from './pages/AuthenticatedPages/IssuedDocuments';
+import CertificateDownload from './pages/AuthenticatedPages/Apply-Download/CertificateDownload';
+import MarksheetDownload from './pages/AuthenticatedPages/Apply-Download/MarksheetDownload';
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
                   <Route path='' element={<MainContent/>}/>
                   <Route path='documents' element={<MainContent/>}/>
                   <Route path='search' element={<IssuedDocument/>}/>
+                  <Route path='certificate' element={<CertificateDownload/>}/>
+                  <Route path='marksheet' element={<MarksheetDownload/>}/>
               </Route>
           </Route>
           <Route path='/' element={<Home/>}/>

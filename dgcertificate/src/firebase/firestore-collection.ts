@@ -1,6 +1,7 @@
-import { addDoc, collection, CollectionReference, doc, DocumentData,getDoc, getDocs, } from "firebase/firestore";
+import { addDoc, collection, CollectionReference, doc, DocumentData, DocumentReference, getDoc, getDocs, } from "firebase/firestore";
 import { firestoredb } from './firebase-config';
 import { SubmittedFormType } from "../pages/Register/validation";
+import { thumbnailType, providedDocumentsList } from "../pages/Home/CertificateCarousel";
 interface DocumentFields {
     emailId: string,
     gender: string,
@@ -15,12 +16,9 @@ export interface ReceivedDocuments {
     id: string;
     fields: DocumentFields;
 }
-type ProvidedDocument = {
-    id: number,
-    title: string,
-    image: string
-}
-export type providedDocumentsType = ProvidedDocument[];
+
+
+
 
 export class FireStoreCollection {
     private collectionName: string;
@@ -29,7 +27,12 @@ export class FireStoreCollection {
         this.collectionName = collectionName;
         this.collectionRef = collection(firestoredb, this.collectionName);
     }
-
+    getCollectionRef(): CollectionReference<DocumentData> {
+        return this.collectionRef;
+    }
+    getUserDocRef(userId: string): DocumentReference<DocumentData> {
+        return doc(this.collectionRef, userId);
+    }
     async addDocumentWithId(formDetails: SubmittedFormType, collectionName?: string) {
         if (this.collectionName) {
             try {
@@ -50,21 +53,13 @@ export class FireStoreCollection {
         return documents;
     }
 
-    async readProvidedDocuments(): Promise<providedDocumentsType> {
-        const docRef = doc(firestoredb, this.collectionName, 'rXp3CaNCqr0BRqJ0WqCm');
-        try {
-            const snapshot = await getDoc(docRef);
-            console.log(snapshot)
-            const documents = snapshot.data()?.documents ?? [];
-            const documentList = documents.map((doc: any) => ({
-                id: doc.id,
-                title: doc.title,
-                image: doc.image,
-            })) as providedDocumentsType;
-            return documentList;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
+    async readProvidedDocuments(): Promise<providedDocumentsList[]> {
+        const snapshot = await getDocs(this.collectionRef);
+        const documents = snapshot.docs.map((doc) => {
+            const fields = doc.data() as thumbnailType;
+            return { id: doc.id, fields };
+        });
+        return documents;
     }
+
 }

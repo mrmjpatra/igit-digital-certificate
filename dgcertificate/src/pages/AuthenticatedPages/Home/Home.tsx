@@ -30,7 +30,6 @@ const LeftContainer = () => {
                         <List>
                             {
                                 MenuListItem.map((item) => {
-
                                     return (
                                         <ListItem key={item.id} disablePadding >
                                             <Link to={item.link}>

@@ -105,7 +105,7 @@ const Social = styled.div`
 const Item2 = styled.div`
     display: flex;
     justify-content: center;
-    width: 50%;
+    width: 52%;
     margin: 0 auto 0 auto;
     padding: 2rem 1rem 0 1rem;
     line-height: 2rem;

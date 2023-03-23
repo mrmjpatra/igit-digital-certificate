@@ -3,6 +3,7 @@ import {FormikErrors, FormikValues} from 'formik';
 export interface formType {
     name: string,
     gender: string,
+    branch:string,
     mobileNumber: number,
     emailId: string,
     registrationNumber: number,
@@ -55,9 +56,12 @@ export interface SubmittedFormType{
     name:string,
     mobileNumber:string,
     emailId:string,
+    branch:string,
     regdNo:string,
     rollNo:string,
     passYear:string,
     gender:string
-    verifyed:boolean
+    verifyed:boolean,
+    apply?:boolean,
+    pending?:boolean
 }

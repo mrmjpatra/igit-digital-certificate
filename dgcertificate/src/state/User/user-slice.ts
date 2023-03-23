@@ -4,11 +4,14 @@ const initialState:SubmittedFormType={
     name:'',
     emailId:'',
     mobileNumber:'',
+    branch:'',
     regdNo:'',
     rollNo:'',
     passYear:'',
     gender:'',
-    verifyed:false
+    verifyed:false,
+    apply:false,
+    pending:false
 };
 
 const userSlice=createSlice({
@@ -19,30 +22,37 @@ const userSlice=createSlice({
             return initialState;
         }
         const userData:SubmittedFormType=JSON.parse(localUser);
-        const {name,emailId,mobileNumber,regdNo,rollNo,passYear,gender,verifyed}=userData;
+        const {name,emailId,mobileNumber,branch,regdNo,rollNo,passYear,gender,verifyed}=userData;
         return{
             name,
             emailId,
             mobileNumber,
+            branch,
             regdNo,
             rollNo,
             passYear,
             gender,
-            verifyed
+            verifyed,
         };
     },
     reducers:{
         setUserDetails:(state,action)=>{
-            const{name,emailId,mobileNumber,regdNo,rollNo,passYear,gender,verifyed}=action.payload;
-            localStorage.setItem('UserAuth',JSON.stringify({name,emailId,mobileNumber,regdNo,rollNo,passYear,gender,verifyed}));
+            const{name,emailId,mobileNumber,branch,regdNo,rollNo,passYear,gender,verifyed}=action.payload;
+            localStorage.setItem('UserAuth',JSON.stringify({name,emailId,mobileNumber,branch,regdNo,rollNo,passYear,gender,verifyed}));
             state.name=name;
             state.emailId=emailId;
             state.mobileNumber=mobileNumber;
+            state.branch=branch;
             state.regdNo=regdNo;
             state.rollNo=rollNo;
             state.passYear=passYear;
             state.gender=gender;
             state.verifyed=verifyed
+        },
+        setCertificateValue:(state,action)=>{
+            const {apply,pending}=action.payload;
+            state.apply=apply;
+            state.pending=pending;
         },
         emptyValue: (state) => {
             state = initialState;

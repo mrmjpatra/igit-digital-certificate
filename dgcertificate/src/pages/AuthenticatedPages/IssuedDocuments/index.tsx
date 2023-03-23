@@ -1,7 +1,7 @@
 import { Download } from '@mui/icons-material';
 import React from 'react'
 import './issue.css';
-import c1 from '../../../assets/c1.jpg'
+import c1 from '../../../assets/c1.png'
 
 const IssuedDocument = () => {
     return (
