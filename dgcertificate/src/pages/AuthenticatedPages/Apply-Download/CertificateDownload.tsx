@@ -1,12 +1,43 @@
 import { Button, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Switch } from '@mui/material';
 import { Stack } from '@mui/system';
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FireStoreCollection, ReceivedDocuments } from '../../../firebase/firestore-collection';
 import { useAppSelector } from '../../../state/hooks';
-
+import StepsToDownload from './StepsToDownload';
+export interface applyCertFormType {
+    isHosteller: boolean,
+    hostelName?: string,
+    dept: string
+}
+interface IClearance {
+    library: {
+        clearance: boolean;
+        remarkStatus: boolean;
+        remark: string;
+    };
+    hostel: {
+        formData: applyCertFormType;
+        clearance: boolean;
+        remarkStatus: boolean;
+        remark: string;
+    };
+    branchdept: {
+        clearance: boolean;
+        remarkStatus: boolean;
+        remark: string;
+    };
+}
+interface fieldType {
+    clearance: IClearance,
+    apply: boolean;
+    pending: boolean;
+}
 const Apply = () => {
+    const userEmail = useAppSelector(state => state.user.emailId);
     const branch = useAppSelector(state => state.user.branch);
+    const navigate=useNavigate();
     const [isHosteller, setIsHosteller] = useState(false);
     const [hostelName, setHostelName] = useState('');
     const hostelList = ['Akash Bhawan', 'Aryabhat Bhawan', 'Bhaskar Bhawan', "Brahmos Bhawan", 'Suriya Bhawan', 'Rohini Bhawan', 'Prithivi Bhawan'];
@@ -16,13 +47,8 @@ const Apply = () => {
         diploma: ['ELECTRICAL', 'MECH', 'CIVIL']
     };
     const [dept, setDept] = useState('');
-
-    interface applyCertFormType {
-        isHosteller: boolean,
-        hostelName?: string,
-        dept: string
-    }
-
+    const [isApplied, setIsApplied] = useState(false);
+    const usersCollection = new FireStoreCollection("Users");
     const handleSubmit = () => {
         const formData: applyCertFormType = {
             isHosteller,
@@ -37,10 +63,42 @@ const Apply = () => {
                 return;
             }
         }
-        const usersCollection = new FireStoreCollection("Users");
-        const userId = "abc123";
-        const userDocRef = usersCollection.getUserDocRef(userId);
+        const clearance: IClearance = {
+            library: {
+                clearance: false,
+                remarkStatus: true,
+                remark: ''
+            },
+            hostel: {
+                formData,
+                clearance: false,
+                remarkStatus: true,
+                remark: ''
+            },
+            branchdept: {
+                clearance: false,
+                remarkStatus: true,
+                remark: ''
+            },
+        }
+        const fields: fieldType = {
+            clearance,
+            apply: true,
+            pending: true,
+        }
+        usersCollection.updateUserFields(userEmail, fields);
     }
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const allDetails = await usersCollection.readSpecifUserDetails(userEmail);
+            // console.log(allDetails);
+            if (allDetails.apply) {
+                navigate('/home/pending');
+            }
+            setIsApplied(allDetails.apply);
+        }
+        fetchUsers();
+    }, []);
 
 
     return (

@@ -87,7 +87,7 @@ const CertificateCarousel = () => {
             </Carosel>
             <ChipIconContainer >
                 {
-                    certificate.map(item => <Chip key={item.id} icon={<TrendingUpIcon color='primary' />} label={item.title} variant="outlined" />)
+                    certificateList.map(item => <Chip key={item.id} icon={<TrendingUpIcon color='primary' />} label={item.fields.title} variant="outlined" />)
                 }
             </ChipIconContainer>
         </CertificateCarouselContainer>

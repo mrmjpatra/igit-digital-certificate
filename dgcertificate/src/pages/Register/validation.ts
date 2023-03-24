@@ -62,6 +62,4 @@ export interface SubmittedFormType{
     passYear:string,
     gender:string
     verifyed:boolean,
-    apply?:boolean,
-    pending?:boolean
 }

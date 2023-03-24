@@ -3,9 +3,36 @@ import Paper from '@mui/material/Paper';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../state/hooks';
+import { userLoggedOut } from '../../state/Auth/sliceAuth';
+import { emptyValue } from '../../state/User/user-slice';
+import { resetAtLogoutMobile } from '../../state/MobileAuth/sliceMobile';
+import { resetAtLogout } from '../../state/GoogleData/sliceGoogle';
+import { auth } from '../../firebase/firebase-config';
+import { signOut } from 'firebase/auth';
+
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const typeLogin = useAppSelector(state => state.auth.mobileLogin);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const handleLogOut = () => {
+    if (!typeLogin) {
+      dispatch(resetAtLogout());
+      signOut(auth).then(() => {
+
+      }).catch((error) => {
+        console.log("Error while logout")
+        console.log(error);
+      })
+    } else {
+      dispatch(resetAtLogoutMobile());
+    }
+    dispatch(emptyValue());
+    dispatch(userLoggedOut());
+    navigate('/');
+  }
   return (
     <Paper elevation={3} style={{ position: 'fixed', width: '100%', top: '0', zIndex: '100' }} square>
       <HeaderContainer >
@@ -16,11 +43,22 @@ const Header = () => {
           </Logo>
         </Link>
 
-        <LoginSign>
-          <Button variant='text' onClick={() => navigate('/login')} >SIGN IN</Button>
-          <hr style={{ border: '1.3px solid rgb(98, 97, 97)' }} />
-          <Button variant='contained' style={{ borderRadius: '1.5rem' }} onClick={() => navigate('/register')} >SIGN UP</Button>
-        </LoginSign>
+        {
+          isLoggedIn ?
+            <>
+              <LoginSign>
+                <Button variant='text' onClick={handleLogOut} >Logout</Button>
+              </LoginSign>
+            </> :
+            <>
+              <LoginSign>
+                <Button variant='text' onClick={() => navigate('/login')} >SIGN IN</Button>
+                <hr style={{ border: '1.3px solid rgb(98, 97, 97)' }} />
+                <Button variant='contained' style={{ borderRadius: '1.5rem' }} onClick={() => navigate('/register')} >SIGN UP</Button>
+              </LoginSign>
+            </>
+        }
+
       </HeaderContainer>
     </Paper>
   )

@@ -34,7 +34,7 @@ const googleSlice = createSlice({
             state.photoURL = photoURL;
             state.uid = uid;
         },
-        resetAtLogout:(state)=>{
+        resetAtLogout: (state) => {
             state = initialState;
             localStorage.removeItem("googleAuth");
         }

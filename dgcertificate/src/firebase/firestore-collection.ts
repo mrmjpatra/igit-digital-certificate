@@ -1,7 +1,9 @@
-import { addDoc, collection, CollectionReference, doc, DocumentData, DocumentReference, getDoc, getDocs, } from "firebase/firestore";
+import { addDoc, collection, CollectionReference, doc, DocumentData, DocumentReference, getDoc, getDocs, setDoc, updateDoc, } from "firebase/firestore";
 import { firestoredb } from './firebase-config';
 import { SubmittedFormType } from "../pages/Register/validation";
 import { thumbnailType, providedDocumentsList } from "../pages/Home/CertificateCarousel";
+import { applyCertFormType } from "../pages/AuthenticatedPages/Apply-Download/CertificateDownload";
+import { IDepartments } from "../pages/AuthenticatedPages/Apply-Download/StepsToDownload";
 interface DocumentFields {
     emailId: string,
     gender: string,
@@ -12,14 +14,16 @@ interface DocumentFields {
     rollNo: string,
     verifyed: boolean
 }
+
+interface CertificateDownloadForm extends DocumentFields {
+    apply: boolean,
+    pending: boolean,
+    certDown: applyCertFormType
+}
 export interface ReceivedDocuments {
     id: string;
     fields: DocumentFields;
 }
-
-
-
-
 export class FireStoreCollection {
     private collectionName: string;
     private collectionRef: CollectionReference<DocumentData>;
@@ -36,7 +40,9 @@ export class FireStoreCollection {
     async addDocumentWithId(formDetails: SubmittedFormType, collectionName?: string) {
         if (this.collectionName) {
             try {
-                await addDoc(this.collectionRef, formDetails);
+                const userEmail = formDetails.emailId;
+                const userDocRef = this.getUserDocRef(userEmail);
+                await setDoc(userDocRef, formDetails);
             } catch (error) {
                 console.log(error);
                 throw Error("Error while Document Uploading");
@@ -52,7 +58,11 @@ export class FireStoreCollection {
         });
         return documents;
     }
-
+    async readSpecifUserDetails(userEmail: string): Promise<CertificateDownloadForm> {
+        const userDocRef = this.getUserDocRef(userEmail);
+        const snapshot = await getDoc(userDocRef);
+        return snapshot.data() as CertificateDownloadForm;
+    }
     async readProvidedDocuments(): Promise<providedDocumentsList[]> {
         const snapshot = await getDocs(this.collectionRef);
         const documents = snapshot.docs.map((doc) => {
@@ -60,6 +70,35 @@ export class FireStoreCollection {
             return { id: doc.id, fields };
         });
         return documents;
+    }
+    async updateUserFields(userEmail: string, fields: Record<string, any>): Promise<void> {
+        try {
+            // Get a reference to the user document using their email address
+            const userDocRef = doc(this.collectionRef, userEmail);
+
+            // Update the user document with the specified fields
+            await updateDoc(userDocRef, fields);
+            console.log("Fields updated successfully");
+        } catch (error) {
+            console.log("Error updating fields: ", error);
+        }
+    }
+
+    async getAllClearanceList(userEmail: string): Promise<IDepartments[]> {
+        try {
+            const fieldName: string='clearance';
+            const docRef = doc(this.collectionRef, userEmail);
+            const docSnapshot = await getDoc(docRef);
+            if (docSnapshot.exists()) {
+                const fieldValue = docSnapshot.data()?.[fieldName] ;
+                return fieldValue;
+            }else {
+                throw new Error(`${this.collectionName} document not found`);
+            }
+        } catch (error) {
+            console.error("Error fetching departments: ", error);
+            throw error;
+        }
     }
 
 }

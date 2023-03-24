@@ -15,14 +15,25 @@ const authSlice = createSlice({
     initialState: () => {
         const localLoginCheck = localStorage.getItem('isLoggedIn');
         const localVerificationData = localStorage.getItem('isVerifyed');
+        const localLoginType=localStorage.getItem('mobileLogin');
         if (localLoginCheck === null) {
             localStorage.setItem("isLoggedIn", "false");
             return initialState;
-        } return {
+        }
+        if (localLoginType && localLoginType==="false") {
+            return {
+                isLoggedIn: localLoginCheck === "true",
+                isVerifyed: localVerificationData === "true",
+                mobileLogin:false
+            }
+        }
+         return {
             isLoggedIn: localLoginCheck === "true",
             isVerifyed: localVerificationData === "true",
-            mobileLogin:false
-        }
+            mobileLogin:true
+         }
+
+        
     },
     reducers: {
         userLoggedIn: (state) => {
@@ -31,6 +42,7 @@ const authSlice = createSlice({
         },
         loginType:(state)=>{
             state.mobileLogin=true;
+            localStorage.setItem("mobileLogin","true");
         }
         ,
         userLoggedOut: (state) => {
@@ -38,6 +50,7 @@ const authSlice = createSlice({
             localStorage.clear();
             localStorage.setItem("isLoggedIn", "false");
             localStorage.setItem("isVerifyed", "false");
+            localStorage.setItem("mobileLogin", "false");
         },
         userVerifyed: (state) => {
             state.isVerifyed = true;

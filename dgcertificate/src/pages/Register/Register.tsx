@@ -22,17 +22,34 @@ const Register = () => {
     const googleLoginState = useAppSelector(state => state.google);
     const mobileLoginState = useAppSelector(state => state.mobile);
     const dispatch = useAppDispatch();
-
-    const initialValues: formType = {
-        name: '',
-        gender: 'male',
-        mobileNumber: 0,
-        emailId: googleLoginState?.email,
-        branch: '',
-        registrationNumber: 0,
-        rollNumber: 0,
-        passingYear: 0
+    let mobileNumber = useAppSelector(state => state.mobile.phoneNumber);
+    mobileNumber=mobileNumber.slice(3);
+    let initialValues: formType;
+    if (!typeLogin) {
+        initialValues = {
+            name: '',
+            gender: 'male',
+            mobileNumber: 0,
+            emailId: googleLoginState?.email,
+            branch: '',
+            registrationNumber: 0,
+            rollNumber: 0,
+            passingYear: 0
+        }
+    }else{
+        initialValues = {
+            name: '',
+            gender: 'male',
+            mobileNumber:Number(mobileNumber) ,
+            emailId: googleLoginState?.email,
+            branch: '',
+            registrationNumber: 0,
+            rollNumber: 0,
+            passingYear: 0
+        }
     }
+
+
     let initalFormValue: placeHolder = {
         displayName: '',
         email: '',
@@ -81,7 +98,7 @@ const Register = () => {
         },
     });
 
-    // console.log(formik.errors)
+    console.log(typeLogin);
     const getStructureFormDetails = (values: formType) => {
         const { name, mobileNumber, emailId, branch, registrationNumber, rollNumber, passingYear, gender } = values;
         const userRegister: SubmittedFormType = {
@@ -135,7 +152,10 @@ const Register = () => {
                             helperText={formik.errors.name ? formik.errors.name : ''} />
                         </dd>
 
-                        <dd className='input__field'><TextField required id="outlined-basic" size='small' fullWidth label="Mobile Number" type='number' variant="outlined" name='mobileNumber' value={formik.values.mobileNumber} onChange={formik.handleChange} helperText={(formik.errors.mobileNumber === undefined || formik.errors.mobileNumber === '') ? '' : formik.errors.mobileNumber} error={!(formik.errors.mobileNumber === undefined)}
+                        <dd className='input__field'><TextField required id="outlined-basic" size='small' fullWidth label="Mobile Number" type='number' variant="outlined" name='mobileNumber' value={formik.values.mobileNumber} onChange={formik.handleChange}
+
+                            helperText={(formik.errors.mobileNumber === undefined || formik.errors.mobileNumber === '') ? '' : formik.errors.mobileNumber}
+                            error={!(formik.errors.mobileNumber === undefined)}
                             placeholder={initalFormValue.phoneNumber}
                             InputProps={{
                                 readOnly: typeLogin ? true : false
@@ -159,7 +179,7 @@ const Register = () => {
                                     labelId="demo-simple-select-required-label"
                                     id="demo-simple-select-required"
                                     value={formik.values.branch}
-                                    label="Age *"
+                                    label="Branch*"
                                     name='branch'
                                     onChange={formik.handleChange}
                                     fullWidth

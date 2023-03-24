@@ -10,8 +10,7 @@ const initialState:SubmittedFormType={
     passYear:'',
     gender:'',
     verifyed:false,
-    apply:false,
-    pending:false
+   
 };
 
 const userSlice=createSlice({
@@ -50,9 +49,7 @@ const userSlice=createSlice({
             state.verifyed=verifyed
         },
         setCertificateValue:(state,action)=>{
-            const {apply,pending}=action.payload;
-            state.apply=apply;
-            state.pending=pending;
+
         },
         emptyValue: (state) => {
             state = initialState;
