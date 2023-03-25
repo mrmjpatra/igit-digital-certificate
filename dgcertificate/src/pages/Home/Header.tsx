@@ -21,7 +21,6 @@ const Header = () => {
     if (!typeLogin) {
       dispatch(resetAtLogout());
       signOut(auth).then(() => {
-
       }).catch((error) => {
         console.log("Error while logout")
         console.log(error);
@@ -52,9 +51,7 @@ const Header = () => {
             </> :
             <>
               <LoginSign>
-                <Button variant='text' onClick={() => navigate('/login')} >SIGN IN</Button>
-                <hr style={{ border: '1.3px solid rgb(98, 97, 97)' }} />
-                <Button variant='contained' style={{ borderRadius: '1.5rem' }} onClick={() => navigate('/register')} >SIGN UP</Button>
+                <Button variant='contained' style={{borderRadius:'3rem'}} onClick={() => navigate('/login')} >SIGN IN</Button>
               </LoginSign>
             </>
         }

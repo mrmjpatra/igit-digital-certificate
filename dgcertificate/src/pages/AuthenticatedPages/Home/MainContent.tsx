@@ -19,4 +19,7 @@ const ContentContainer = styled.div`
     height: 100vh;
     padding: 1rem 2rem;
     background-color: whitesmoke;
+    @media screen and (max-width: 780px) {
+        margin-top: 1rem;
+    }
 `

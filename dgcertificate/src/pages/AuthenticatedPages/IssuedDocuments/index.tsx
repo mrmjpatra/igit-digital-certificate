@@ -2,6 +2,7 @@ import { Download } from '@mui/icons-material';
 import React from 'react'
 import './issue.css';
 import c1 from '../../../assets/c1.png'
+import { IconButton } from '@mui/material';
 
 const IssuedDocument = () => {
     return (
@@ -17,7 +18,9 @@ const IssuedDocument = () => {
                     <span>Sat, 07 Nov 2020 19:29:45 GMT</span>
                 </div>
                 <div className="issue__document__card__right">
-                    <Download/>
+                    <IconButton color='primary' size='large' >
+                        <Download/>
+                    </IconButton>
                 </div>
 
             </div>

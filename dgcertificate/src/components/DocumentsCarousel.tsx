@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import { FireStoreCollection } from "../firebase/firestore-collection";
 import { providedDocumentsList } from "../pages/Home/CertificateCarousel";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../state/hooks";
 
 
 const DocumentsCarousel = () => {
     const [providedDocument, setProvidedDocument] = useState<providedDocumentsList[]>([]);
     const navigate = useNavigate();
+    const drawerOpenState = useAppSelector(state => state.theme.open);
     const options: Options = {
         breakpoints: {
             640: {
@@ -27,8 +29,7 @@ const DocumentsCarousel = () => {
 
             },
             1440: {
-                perPage: 3,
-
+                perPage: drawerOpenState ? 3 : 4, // if drawerOpenState is true, set perPage to 3, otherwise set it to 4
             },
         },
         perMove: 1,
@@ -37,7 +38,7 @@ const DocumentsCarousel = () => {
         // autoplay: true,
         interval: 1000,
         rewind: true,
-        gap: '2rem',
+        gap: '1rem',
         padding: { left: '1rem', right: '1rem' },
     };
     const fetchProvidedDocuments = async () => {
@@ -63,7 +64,7 @@ const DocumentsCarousel = () => {
                         const st = document.fields.branch.toUpperCase();
                         return (
                             <SplideSlide key={document.id}>
-                                <Card onClick={() => handleCardClick(document)}>
+                                <Card drawerOpenState={drawerOpenState} onClick={() => handleCardClick(document)}>
                                     <img src={document.fields.imageUrl} alt={document.fields.title + "img"} />
                                     <CardTitle>
                                         <h4>{st}</h4>
@@ -82,24 +83,30 @@ const DocumentsCarousel = () => {
 export default DocumentsCarousel;
 
 const DocumentCarousel = styled.div`
-overflow: hidden;
- img{
-    width: 40%;
-    height: 55%;
-    border-radius: 1rem;
-    border: 2px solid red;
-  }
-.splide__track{
-    overflow: visible !important;
-}
+    overflow: hidden;
+    img{
+        width: 40%;
+        height: 55%;
+        border-radius: 1rem;
+        border: 2px solid red;
+    }
+    .splide__track{
+        overflow: visible !important;
+    }
+    @media screen and (max-width: 780px) {
+        img{
+            width: 30%;
+            height: 40%;
+        }
+    }
 `;
 
-const Card = styled.div`  
+const Card = styled.div<{ drawerOpenState?: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: 100%;
+    width: ${props => props.drawerOpenState ? '100%' : '80%'};
     height: 85%;
     background-color: white;
     border-radius: 1rem;
@@ -109,7 +116,12 @@ const Card = styled.div`
     transition: all 300ms ease-out;
     &:hover{
         transform: translate(0, -10px);
-        
+    }
+    @media screen and (max-width: 820px) {
+        width: 100%;
+    }
+    @media screen and (max-width: 780px) {
+        width: 100%;
     }
 `;
 const CardTitle = styled.div`

@@ -120,7 +120,7 @@ const Apply = () => {
                                 onChange={(e) => setHostelName(e.target.value)}
                             >
                                 {
-                                    hostelList.map(hostel => <MenuItem key={hostel} value={hostel}>{hostel}</MenuItem>)
+                                    hostelList?.map(hostel => <MenuItem key={hostel} value={hostel}>{hostel}</MenuItem>)
                                 }
                             </Select>
                         </FormControl>

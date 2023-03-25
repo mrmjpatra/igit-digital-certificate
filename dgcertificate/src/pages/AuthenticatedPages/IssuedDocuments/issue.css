@@ -50,3 +50,13 @@
 .issue__document__card:hover{
     transform: translate(0,-4px);
 }
+
+@media screen and (max-width: 820px) {
+
+}
+ 
+@media screen and (max-width: 780px){
+    .issue__document__card__middle{
+        display: none;
+    }
+}
