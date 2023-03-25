@@ -1,46 +1,48 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Digital Certificate
 
-## Available Scripts
+A brief description of what this project does and who it's for
 
-In the project directory, you can run:
+To showcase the flow of the website, you can create a visual sitemap that outlines the pages and their relationships. The sitemap can start with the homepage, followed by the registration page, and then the list of available documents. When a student clicks on a document, the availability status can be checked in the database, and if available, the download button can be displayed. If the document is not available, the apply button can be displayed, and upon clicking it, the notification can be sent to the concerned department for clearance.
 
-### `npm start`
+The structure of the database will depend on the specific requirements of your website, but some common tables could include:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Students table: Contains the details of registered students
+Documents table: Contains the details of each document, such as its name, type, availability status, and clearance requirements
+Departments table: Contains the details of each department and their respective clearance requirements
+Clearance table: Contains the details of each student's clearance status for each department
+When a student applies for clearance, a new record can be added to the clearance table, indicating the student's ID, the department, and the clearance status. The website can check the clearance table to determine whether a student has been cleared for a particular document, and display the appropriate download or apply button.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+In terms of arranging the website, you can use a simple and intuitive interface with clear navigation to help students find what they need easily. You may also consider adding a search function to allow students to quickly find the documents they need. Additionally, it's important to make sure that the website is secure, with appropriate authentication and authorization measures in place to protect sensitive student information.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Authors
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [@mrmjpatra](https://www.github.com/mrmjpatra)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Badges
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Demo
 
-## Learn More
+Insert gif or link to demo
+www.igitcertificate.web.app
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+clone the project to you local project
+open the code in the with project context.
+Run the following command
+```bash
+  npm install
+  npm run
+```
+    
