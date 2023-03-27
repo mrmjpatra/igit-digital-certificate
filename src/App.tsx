@@ -11,6 +11,7 @@ import IssuedDocument from './pages/AuthenticatedPages/IssuedDocuments';
 import CertificateDownload from './pages/AuthenticatedPages/Apply-Download/CertificateDownload';
 import MarksheetDownload from './pages/AuthenticatedPages/Apply-Download/MarksheetDownload';
 import StepsToDownload from './pages/AuthenticatedPages/Apply-Download/StepsToDownload';
+import About from './pages/AuthenticatedPages/About/About';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                   </Route>
                   <Route path='pending' element={<StepsToDownload/> }/>
                   <Route path='marksheet' element={<MarksheetDownload/>}/>
+                  <Route path='about' element={<About/>}/>
               </Route>
           </Route>
           <Route path='/' element={<Home/>}/>

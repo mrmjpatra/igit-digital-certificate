@@ -45,7 +45,6 @@ const NavBar = ({ open, handleDrawerOpen, handleDrawerClose }: AnotherComponentP
         dispatch(userLoggedOut());
         navigate('/');
     }
-    console.log(open);
     return (
         <div>
             <Paper elevation={3} style={{ position: 'fixed', width: '100%', top: '0', zIndex: '100', left: '0' }} square>

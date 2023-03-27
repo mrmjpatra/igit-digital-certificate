@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material"
+import { CircularProgress, Typography } from "@mui/material"
 import { Splide, SplideSlide, Options } from '@splidejs/react-splide';
 import '@splidejs/splide/css';
 import styled from "styled-components";
@@ -54,8 +54,14 @@ const DocumentsCarousel = () => {
     useEffect(() => {
         fetchProvidedDocuments();
     }, []);
+    console.log(providedDocument);
 
     return (
+        providedDocument.length<=0?
+        <DocumentCarousel>
+            <CircularProgress />
+        </DocumentCarousel>
+          :
         <DocumentCarousel>
             <Typography marginBottom='2rem' color='primary' variant="h5">Your Issued Documents</Typography>
             <Splide options={options} >

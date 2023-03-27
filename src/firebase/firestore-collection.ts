@@ -3,7 +3,7 @@ import { firestoredb } from './firebase-config';
 import { SubmittedFormType } from "../pages/Register/validation";
 import { thumbnailType, providedDocumentsList } from "../pages/Home/CertificateCarousel";
 import { applyCertFormType } from "../pages/AuthenticatedPages/Apply-Download/CertificateDownload";
-import { IDepartments } from "../pages/AuthenticatedPages/Apply-Download/StepsToDownload";
+import { IDepartments, IUploadedCertificate } from "../pages/AuthenticatedPages/Apply-Download/StepsToDownload";
 interface DocumentFields {
     emailId: string,
     gender: string,
@@ -58,6 +58,7 @@ export class FireStoreCollection {
         });
         return documents;
     }
+
     async readSpecifUserDetails(userEmail: string): Promise<CertificateDownloadForm> {
         const userDocRef = this.getUserDocRef(userEmail);
         const snapshot = await getDoc(userDocRef);
@@ -84,21 +85,27 @@ export class FireStoreCollection {
         }
     }
 
-    async getAllClearanceList(userEmail: string): Promise<IDepartments[]> {
+    async getAllClearanceList(userEmail: string): Promise<IDepartments> {
         try {
-            const fieldName: string='clearance';
+            const fieldName: string = 'clearance';
             const docRef = doc(this.collectionRef, userEmail);
             const docSnapshot = await getDoc(docRef);
             if (docSnapshot.exists()) {
-                const fieldValue = docSnapshot.data()?.[fieldName] ;
+                const fieldValue = docSnapshot.data()?.[fieldName];
                 return fieldValue;
-            }else {
+            } else {
                 throw new Error(`${this.collectionName} document not found`);
             }
         } catch (error) {
             console.error("Error fetching departments: ", error);
             throw error;
         }
+    }
+    //read all uploaded certificate details
+    async readUploadedCertificateData(regdNumber: string): Promise<IUploadedCertificate> {
+        const userDocRef = this.getUserDocRef(regdNumber);
+        const snapshot = await getDoc(userDocRef);
+        return snapshot.data() as IUploadedCertificate;
     }
 
 }

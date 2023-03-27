@@ -2,16 +2,15 @@
     top: 4rem !important;
     z-index: 14 !important;
 }
+
 .css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root:hover{
-    width: 100%;
+    width: 95%;
     background-color: #d2e2fffa !important;
     /* top-left | top-right | bottom-right | bottom-left */
     border-radius: 0 1.2rem 1.2rem 0;
     color: #1764c0;
 }
-/* .splide__track{
-    overflow: visible !important;
-} */
+
 li.MuiListItem-root a{
     width: 100%;
     color: black;

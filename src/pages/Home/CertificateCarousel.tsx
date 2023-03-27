@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { CircularProgress, Typography } from '@mui/material'
 import { SplideSlide, Options, Splide } from '@splidejs/react-splide'
 import styled from 'styled-components';
 import { certificate } from './certificate'
@@ -7,6 +7,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import "@splidejs/splide/dist/css/splide.min.css"
 import { useEffect, useState } from 'react';
 import { FireStoreCollection } from '../../firebase/firestore-collection';
+import { useNavigate } from 'react-router-dom';
 
 export type thumbnailType = {
     title: string,
@@ -21,6 +22,7 @@ export interface providedDocumentsList {
 
 const CertificateCarousel = () => {
     const [certificateList, setCertificateList] = useState<providedDocumentsList[]>([]);
+    const navigate=useNavigate();
 
     useEffect(() => {
         const fetchProvidedCertificates = async () => {
@@ -30,6 +32,7 @@ const CertificateCarousel = () => {
         }
         fetchProvidedCertificates();
     }, []);
+
 
     const options: Options = {
         perPage: 3,
@@ -63,8 +66,13 @@ const CertificateCarousel = () => {
         width: '100%'
 
     };
+
     return (
-        <CertificateCarouselContainer>
+        certificateList.length<=0?<CertificateCarouselContainer>
+            <CircularProgress/>
+        </CertificateCarouselContainer>:
+
+        <CertificateCarouselContainer onClick={()=>navigate('/home')}>
             <Typography>Download Your Certificates</Typography>
             <Carosel>
                 <Splide
