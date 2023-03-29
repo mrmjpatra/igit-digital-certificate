@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../state/hooks';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Box, Stack } from '@mui/system';
+import { useQuery } from 'react-query';
 
 export interface IClearanceValues {
     clearance: boolean,
@@ -27,20 +28,23 @@ export interface IUploadedCertificate {
 
 const user = new FireStoreCollection('Users');
 const StepsToDownload = () => {
-    const regdNumber=useAppSelector(state=>state.user.regdNo);
+    const regdNumber = useAppSelector(state => state.user.regdNo);
     const userEmail = useAppSelector(state => state.user.emailId);
     const [activeStep, setActiveStep] = useState<number>(0);
-    const [deptClearance, setDeptClearance] = useState<IDepartments>();
+    // const [deptClearance, setDeptClearance] = useState<IDepartments>();
     const [deptList, setDeptList] = useState<string[]>([]);
     const [allClearance, setAllClearance] = useState<boolean>(false);
     const navigate = useNavigate();
 
+
     const fetchDept = async () => {
         const clearance = await user.getAllClearanceList(userEmail);
-        setDeptClearance(clearance);
         setDeptList((Object.keys(clearance)).sort().reverse());
-        checkAllClearance();
+        return clearance;
     }
+
+    const { data: deptClearance ,isLoading} = useQuery(['fetchClearance'], fetchDept)
+
 
     const checkLibraryClearance = (list: IClearanceValues): boolean => {
         if (list?.clearance) {
@@ -81,24 +85,18 @@ const StepsToDownload = () => {
         }
     }
 
-    const handleDownload =async () => {
-        const download=new FireStoreCollection('UploadedCertificates');
-        const certificate=await download.readUploadedCertificateData(regdNumber);
-        if(certificate && certificate.certUrl){
+    const handleDownload = async () => {
+        const download = new FireStoreCollection('UploadedCertificates');
+        const certificate = await download.readUploadedCertificateData(regdNumber);
+        if (certificate && certificate.certUrl) {
             window.location.href = certificate.certUrl;
-        }else{
+        } else {
             alert('Not Available');
         }
     }
 
 
-    useEffect(() => {
-        fetchDept();
-    }, []);
-
-
-
-    if (deptClearance === undefined) {
+    if (isLoading) {
         return (
             <StepsToDownloadContainer>
                 <Box sx={{ width: '100%' }}>
