@@ -1,7 +1,7 @@
 import { CircularProgress, Typography } from '@mui/material'
 import { SplideSlide, Options, Splide } from '@splidejs/react-splide'
 import styled from 'styled-components';
-import { certificate } from './certificate'
+import { certificate } from './certificate';
 import Chip from '@mui/material/Chip';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import "@splidejs/splide/dist/css/splide.min.css"

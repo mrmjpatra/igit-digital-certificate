@@ -24,6 +24,23 @@ export interface ReceivedDocuments {
     id: string;
     fields: DocumentFields;
 }
+
+
+//marksheet
+
+export type studentMarkshet = {
+    name: string,
+    regdNumber: string,
+    rollNumber: string,
+    marks: []
+}
+
+export type marksheetData={
+   data:{
+    subjects:[],
+    markList: studentMarkshet[]
+   }
+}
 export class FireStoreCollection {
     private collectionName: string;
     private collectionRef: CollectionReference<DocumentData>;
@@ -106,6 +123,13 @@ export class FireStoreCollection {
         const userDocRef = this.getUserDocRef(regdNumber);
         const snapshot = await getDoc(userDocRef);
         return snapshot.data() as IUploadedCertificate;
+    }
+
+    //marksheet data
+    async readMarkSheetData(branch:string):Promise<marksheetData>{
+        const userDocRef=this.getUserDocRef(branch)
+        const snapshot=await getDoc(userDocRef)
+      return snapshot.data() as marksheetData
     }
 
 }

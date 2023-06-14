@@ -13,6 +13,8 @@ import MarksheetDownload from './pages/AuthenticatedPages/Apply-Download/Markshe
 import StepsToDownload from './pages/AuthenticatedPages/Apply-Download/StepsToDownload';
 import About from './pages/AuthenticatedPages/About/About';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import MarksheetTemplate from './pages/AuthenticatedPages/Apply-Download/MarksheetTemplate';
+import Print from './pages/Print';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,7 @@ function App() {
                 <Route path='about' element={<About />} />
               </Route>
             </Route>
+            <Route path='/printfile' element={<Print/>}/>
             <Route path='/' element={<Home />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
