@@ -34,7 +34,7 @@ In terms of arranging the website, you can use a simple and intuitive interface 
 ## Demo
 
 Insert gif or link to demo
-www.igitcertificate.web.app
+https://igitcertificate.web.app/
 
 ## Installation
 
