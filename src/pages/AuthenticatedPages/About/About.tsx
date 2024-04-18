@@ -1,7 +1,6 @@
 import { GitHub } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
-import React from 'react'
 import styled from 'styled-components'
 
 const About = () => {

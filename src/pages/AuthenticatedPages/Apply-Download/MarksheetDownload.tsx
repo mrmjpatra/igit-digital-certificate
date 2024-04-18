@@ -124,8 +124,8 @@ const MarksheetDownload = () => {
             <CertificateForm>
                 <CertificateHeader>
                     <TitleContainer>
-                        <img src="https://igitsarang.ac.in/assets/frontend//images/logo.png" alt="" />
-                        <Typography variant='h3'>Indira Gandhi Institute Of Technology </Typography>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/igitcertificate.appspot.com/o/assets%2FWhatsApp%20Image%202024-04-18%20at%202.00.05%20PM.jpeg?alt=media&token=70f9f97f-fbca-43b2-b84f-c48d8a0c8575" alt="" />
+                        <Typography variant='h3'>Nalanda Institute of Technology </Typography>
                     </TitleContainer>
                     <table>
                         <thead>

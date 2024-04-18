@@ -6,7 +6,7 @@ import DocumentsCarousel from '../../../components/DocumentsCarousel'
 const MainContent = () => {
     return (
         <ContentContainer>
-            <Typography color='primary' variant='h5'>Welcome, Mrutyunjaya Patra</Typography>
+            <Typography color='primary' variant='h5'>Welcome, Priyanka Mohanty</Typography>
             <DocumentsCarousel />
         </ContentContainer>
     )

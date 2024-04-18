@@ -1,16 +1,18 @@
 import { Facebook, Instagram, LinkedIn, Twitter } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { Stack } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Footer = () => {
+    const navigate=useNavigate();
     return (
         <FooterContainer>
             <Container>
                 <Item1>
                     <HeadContainer>
                         <Head>
-                            <img src="https://igitsarang.ac.in/assets/frontend//images/logo.png" alt="" />
+                            <img src="https://firebasestorage.googleapis.com/v0/b/igitcertificate.appspot.com/o/assets%2FWhatsApp%20Image%202024-04-18%20at%202.00.05%20PM.jpeg?alt=media&token=70f9f97f-fbca-43b2-b84f-c48d8a0c8575" alt="" />
                             <hr />
                             <Stack justifyContent={'center'}>
                                 <h1>Digital Certificate</h1>
@@ -33,19 +35,19 @@ const Footer = () => {
                 </Item1>
                 <Item2>
                     <Stack>
-                        <a href='#'>Home</a>
-                        <a href='#'>About</a>
-                        <a href='#'>Contact</a>
+                        <a href='/'>Home</a>
+                        <a href='/about'>About</a>
+                        <a href='/contact'>Contact</a>
                     </Stack>
                     <Stack gap={2} marginLeft={4}>
-                        <Button variant='outlined' color='warning' >Sign In</Button>
-                        <Button variant='outlined' color='success' >Sign Up</Button>
+                        <Button variant='outlined' color='warning' onClick={()=>navigate('/login')} >Sign In</Button>
+                        <Button variant='outlined' color='success' onClick={()=>navigate('/register')} >Sign Up</Button>
                     </Stack>
                 </Item2>
             </Container>
             <FooterBottom>
                 <hr />
-                <p>Website designed & developed by Mrutyunjaya Patra</p>
+                <p>Website designed & developed by Priyanka Mohanty</p>
 
             </FooterBottom>
         </FooterContainer>

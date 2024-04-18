@@ -15,7 +15,7 @@ const IssueDocumentCard = ({ date, title, url }: { date: string, title: string, 
                 <span>{title}</span>
             </div>
             <div className="issue__document__card__middle">
-                <p>IGIT, Sarang</p>
+                <p>NIT</p>
                 <span>{date}</span>
             </div>
             <div className="issue__document__card__right">

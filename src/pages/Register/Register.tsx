@@ -23,7 +23,7 @@ const Register = () => {
     const mobileLoginState = useAppSelector(state => state.mobile);
     const dispatch = useAppDispatch();
     let mobileNumber = useAppSelector(state => state.mobile.phoneNumber);
-    mobileNumber=mobileNumber.slice(3);
+    mobileNumber = mobileNumber.slice(3);
     let initialValues: formType;
     if (!typeLogin) {
         initialValues = {
@@ -36,11 +36,11 @@ const Register = () => {
             rollNumber: 0,
             passingYear: 0
         }
-    }else{
+    } else {
         initialValues = {
             name: '',
             gender: 'male',
-            mobileNumber:Number(mobileNumber) ,
+            mobileNumber: Number(mobileNumber),
             emailId: googleLoginState?.email,
             branch: '',
             registrationNumber: 0,
@@ -139,7 +139,7 @@ const Register = () => {
     return (
         <div className='register__container' >
             <div className='logo'>
-                <img src="https://igitsarang.ac.in/assets/frontend//images/logo.png" alt="" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/igitcertificate.appspot.com/o/assets%2FWhatsApp%20Image%202024-04-18%20at%202.00.05%20PM.jpeg?alt=media&token=70f9f97f-fbca-43b2-b84f-c48d8a0c8575" alt="" />
                 <hr />
                 <p>Digital Certificate</p>
             </div>
@@ -152,14 +152,12 @@ const Register = () => {
                             helperText={formik.errors.name ? formik.errors.name : ''} />
                         </dd>
 
-                        <dd className='input__field'><TextField required id="outlined-basic" size='small' fullWidth label="Mobile Number" type='number' variant="outlined" name='mobileNumber' value={formik.values.mobileNumber} onChange={formik.handleChange}
+                        <dd className='input__field'>
+                            <TextField required id="outlined-basic" size='small' fullWidth label="Mobile Number" type='number' variant="outlined" name='mobileNumber' value={formik.values.mobileNumber} onChange={formik.handleChange}
 
                             helperText={(formik.errors.mobileNumber === undefined || formik.errors.mobileNumber === '') ? '' : formik.errors.mobileNumber}
                             error={!(formik.errors.mobileNumber === undefined)}
                             placeholder={initalFormValue.phoneNumber}
-                            InputProps={{
-                                readOnly: typeLogin ? true : false
-                            }}
                         />
                         </dd>
                         <dd className='input__field'>
@@ -217,7 +215,7 @@ const Register = () => {
                             loadingPosition="start"
                             startIcon={<SaveIcon />}
                             variant="contained" color='primary' type='submit' >Submit</LoadingButton>
-                        <p className='policy'>By signing up, you agree to IGIT's Terms and Privacy Policy</p>
+                        <p className='policy'>By signing up, you agree to NIT's Terms and Privacy Policy</p>
                     </form>
                 </FormControl>
             </div>
