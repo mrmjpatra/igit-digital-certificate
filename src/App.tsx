@@ -1,29 +1,31 @@
-import React from 'react';
-import Home from './pages/Home/Home';
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Register from './pages/Register/Register';
-import Login from './pages/Login/Login';
-import ProtectedRoute from './utils/ProtectedRoute';
-import ProtectedHome from './pages/AuthenticatedPages/Home/Home';
-import MainContent from './pages/AuthenticatedPages/Home/MainContent';
-import IssuedDocument from './pages/AuthenticatedPages/IssuedDocuments';
+import ReactGA from 'react-ga';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import About from './pages/AuthenticatedPages/About/About';
 import CertificateDownload from './pages/AuthenticatedPages/Apply-Download/CertificateDownload';
 import MarksheetDownload from './pages/AuthenticatedPages/Apply-Download/MarksheetDownload';
 import StepsToDownload from './pages/AuthenticatedPages/Apply-Download/StepsToDownload';
-import About from './pages/AuthenticatedPages/About/About';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import MarksheetTemplate from './pages/AuthenticatedPages/Apply-Download/MarksheetTemplate';
+import ProtectedHome from './pages/AuthenticatedPages/Home/Home';
+import MainContent from './pages/AuthenticatedPages/Home/MainContent';
+import IssuedDocument from './pages/AuthenticatedPages/IssuedDocuments';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
 import Print from './pages/Print';
+import Register from './pages/Register/Register';
+import ProtectedRoute from './utils/ProtectedRoute';
+import RouteChangeTracker from './analytics/RouterChangeTracker';
 
 const queryClient = new QueryClient();
-
+const TRACKING_ID = "G-7WRR063DJ6";
+ReactGA.initialize(TRACKING_ID);
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <BrowserRouter>
           <Routes>
+            <RouteChangeTracker/>
             <Route element={<ProtectedRoute />}>
               <Route path='/home' element={<ProtectedHome />}>
                 <Route path='' element={<MainContent />} />
